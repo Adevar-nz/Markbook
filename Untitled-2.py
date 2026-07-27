@@ -8,9 +8,11 @@ then convert score to grade and display a neat table
 LOWER_GRADE_LIMIT = 0
 HIGHER_GRADE_LIMIT = 100
 
+
 teacher_name = ""
 test_name = ""
 students_and_score = {}
+highest_student_list = []
 
 #--------Functions----------#
 
@@ -62,19 +64,20 @@ def grade_converter(score):
 def entering_test_data():
     '''enters the data for the teacher and test name'''
 
-    teacher_name = input("Please enter the teachers Name: ").title()
+    teacher_name = input("Please enter the teachers Name: \n").title()
 
     while str_validator(teacher_name) == False:
         teacher_name = input("Please enter the teachers Name without numbers \
-or special characters: ").title()
+or special characters: \n").title()
     
-    test_name = input('Please enter the test Name:')
+    test_name = input('Please enter the test Name:\n')
 
     while str_validator(test_name) == False:
         test_name = input('Please enter the test Name without numbers or \
- special characters:')
+ special characters:\n')
 
     return [teacher_name, test_name]
+
 
 def score_entering():
     ''' Enters the score for each student and when finish is typed it will
@@ -85,31 +88,64 @@ def score_entering():
     while finish != "Finish":
 
         #Verifies the student name
-        student_name = input("Please enter the students Name: ").title()
+        student_name = input("Please enter the students Name: \n").title()
         while str_validator(student_name) == False:
-            student_name = input("Please enter a VALID student Name: ")
+            student_name = input("Please enter a VALID student Name: \n")
         print()
 
         #Verifies the student score
-        student_score = input("Please enter the students score: ")
+        student_score = input("Please enter the students score: \n")
         while number_and_range_validator(student_score, LOWER_GRADE_LIMIT, \
                                           HIGHER_GRADE_LIMIT) == False:
-            student_score = input("Please enter a VALID student score: ")
+            student_score = input("Please enter a VALID student score: \n")
+
         student_score = int(student_score)
         print()
 
         students_and_score[student_name] = student_score
 
-        finish = input("Would you like to carry on? type finish if no: ").title()
+        finish = input("Would you like to carry on? type finish if complete: \n").title()
         while str_validator(finish) == False:
-            finish = input("Would you like to carry on? type finish if no: ").title()
+            finish = input("Would you like to carry on? type finish if complete: \n").title()
         print()
             
 def average_grade(dictionary):
     ''' gets the average score of the entire class'''
 
-    
+    average = 0
+    for key, value in dictionary.items():
+        average = average + value
 
-def get_highest_students():
+    average = average / len(dictionary)
+
+    return average
+
+def get_highest_students(dictionary):
     ''' gets the names of the top 3 students '''
 
+    top_student_amount = 3
+    student_dict = dictionary
+    
+    while top_student_amount != 0:
+        highest_student = max(student_dict, key = student_dict.get)
+
+    # adds the student to the list, a removes it from the local list,allowing
+    #second to be the nw highest student
+        highest_student_list.append(highest_student)
+        del student_dict[highest_student]
+        top_student_amount = top_student_amount - 1
+
+    return highest_student_list
+
+
+def get_lowest_student(dictionary):
+    '''gets the lowest student in the dictionary '''
+
+    lowest_student = min(dictionary, key = dictionary.get)
+
+    return lowest_student
+
+score_entering()
+#print(average_grade(students_and_score))
+#print(get_highest_students(students_and_score))
+#print(get_lowest_student(students_and_score))
