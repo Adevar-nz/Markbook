@@ -1,3 +1,5 @@
+
+
 '''Created by Jonathan Daniel
 Date: 24/07/2026
 The purpose of this file is to enter students name and raw score 
@@ -55,28 +57,25 @@ def grade_converter(score):
         elif score >= 70 and score <= 89:
             return "M"
         
-        elif score > 90:
+        elif score >= 90:
             return "E"
     else:
         return False
     
 
-def entering_test_data():
+def entering_test_data( ):
     '''enters the data for the teacher and test name'''
+    global teacher_name, test_name
 
     teacher_name = input("Please enter the teachers Name: \n").title()
-
+#checks if the teacher name is valid
     while str_validator(teacher_name) == False:
         teacher_name = input("Please enter the teachers Name without numbers \
 or special characters: \n").title()
     
     test_name = input('Please enter the test Name:\n')
-
-    while str_validator(test_name) == False:
-        test_name = input('Please enter the test Name without numbers or \
- special characters:\n')
-
-    return [teacher_name, test_name]
+        
+    
 
 
 def score_entering():
@@ -104,6 +103,7 @@ def score_entering():
 
         students_and_score[student_name] = student_score
 
+        #aks user if they want to continue
         finish = input("Would you like to carry on? type finish if complete: \n").title()
         while str_validator(finish) == False:
             finish = input("Would you like to carry on? type finish if complete: \n").title()
@@ -130,7 +130,7 @@ def get_highest_students(dictionary):
         highest_student = max(student_dict, key = student_dict.get)
 
     # adds the student to the list, a removes it from the local list,allowing
-    #second to be the nw highest student
+    #second to be the new highest student
         highest_student_list.append(highest_student)
         del student_dict[highest_student]
         top_student_amount = top_student_amount - 1
@@ -145,7 +145,23 @@ def get_lowest_student(dictionary):
 
     return lowest_student
 
+
+#----------Main Program----------#
+
+test_data = entering_test_data()
+print()
 score_entering()
-#print(average_grade(students_and_score))
-#print(get_highest_students(students_and_score))
-#print(get_lowest_student(students_and_score))
+print()
+
+print(f" The teacher name is: {teacher_name}\n The test name is: {test_name}")
+#writes the table of the entire classes score, grade and name
+for key,value in students_and_score.items():
+    print(f"Student: {key} Score: {value} Grade: {grade_converter(value)}")
+
+print()
+print(f'The Top 3 students is \n {get_highest_students(students_and_score)}')
+print()
+print(f"The lowest student is \n {get_lowest_student(students_and_score)}")
+print()
+print(f"The average score was : {average_grade(students_and_score)}")
+
