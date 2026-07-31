@@ -124,7 +124,7 @@ def get_highest_students(dictionary):
     ''' gets the names of the top 3 students '''
 
     top_student_amount = 3
-    student_dict = dictionary
+    student_dict = dictionary.copy()
     
     while top_student_amount != 0:
         highest_student = max(student_dict, key = student_dict.get)
@@ -154,6 +154,7 @@ score_entering()
 print()
 
 print(f" The teacher name is: {teacher_name}\n The test name is: {test_name}")
+
 #writes the table of the entire classes score, grade and name
 for key,value in students_and_score.items():
     print(f"Student: {key} Score: {value} Grade: {grade_converter(value)}")
